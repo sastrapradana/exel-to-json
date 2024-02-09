@@ -1,0 +1,84 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+} 
+
+section {
+    width: 100%;
+    min-height: 100vh;
+    max-height: max-content;
+    background-color: rgb(223, 220, 214);
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    gap: 10px;
+}
+
+.header {
+    margin-top: 10px;
+    width: 90%;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+}
+
+.header h1 {
+    text-transform: uppercase;
+}
+
+.header button {
+    margin: auto;
+    width: 50%;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form {
+    width: 90%;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+form input {
+    padding: 5px;
+    width: 70%;
+}
+
+.btn {
+    display: flex;
+    gap: 10px;
+}
+
+.btn button {
+    padding: 5px 20px;
+    cursor: pointer;
+}
+
+.btn :nth-child(1) {
+    background-color: rgb(0, 204, 255);
+}
+
+.btn :nth-child(2) {
+    background-color: crimson;
+}
+
+.container {
+    width: 70%;
+    height: max-content;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}

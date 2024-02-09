@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <section>
+        <div class="header">
+            <h1>Cari KK</h1>
+            <input type="file" id="fileInput">
+            <button onclick="convertExcelToJson()">Convert Data</button>
+        </div>
+         
+        <form action="" onsubmit="handleSubmit(event)">
+            <label for="no_kk">No KK</label>
+            <input type="text" name="no_kk" id="no_kk">
+            <div class="btn">
+                <button>Cari</button>
+                <button onclick="clearInput()">Hapus</button>
+            </div>
+        </form>
+
+        <div class="container" id="container">
+
+        </div>
+    </section>
+
+    
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.0/xlsx.full.min.js"></script>
+<script>
+    let dataAll = null
+    const inputValue = document.getElementById('no_kk')
+    const container = document.getElementById('container')
+
+    function convertExcelToJson() {
+        const fileInput = document.getElementById('fileInput');
+        
+        if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function(event) {
+            const data = new Uint8Array(event.target.result);
+            const workbook = XLSX.read(data, { type: 'array' });
+
+            const sheetName = workbook.SheetNames[0];
+
+            const sheet = workbook.Sheets[sheetName];
+
+            const jsonData = XLSX.utils.sheet_to_json(sheet);
+            if(jsonData) {
+                dataAll = jsonData
+        alert('Data Berhasil Di Convert')
+
+            }
+        };
+
+        reader.readAsArrayBuffer(file);
+        } else {
+        console.error('No file selected');
+        }
+    }
+
+    function handleSubmit(e) {
+
+        e.preventDefault()
+        const dataX = dataAll;
+        dataAll.splice(0, 4)
+
+        const filterByname = dataAll.filter((data) => {
+            return data.__EMPTY_1 == inputValue.value
+        })
+
+        if(filterByname) {
+            container.innerHTML = filterByname.map((data,i) => {
+                return (
+                    `
+                        <div class="data">
+                            <ul>
+                                <li>No: ${i + 1}</li>
+                                <li>No KK: ${data.__EMPTY_1}</li>
+                                <li>No NIK: ${data["DAFTAR PEMILIH SEMENTARA"]}</li>
+                                <li>Nama: ${data.__EMPTY_2}</li>
+                                <li>Tempat Lahir: ${data.__EMPTY_3}</li>
+                                <li>Tgl Lahir: ${data.__EMPTY_4}</li>
+                                <li>Alamat: ${data.__EMPTY_7}</li>
+                            </ul>
+                        </div>
+                    `
+                )
+            })
+        } else {
+            container.innerHTML = `<p>Data Kosong</p>`
+        }
+
+    }
+
+    function clearInput() {
+        inputValue.value = ''
+    }
+</script>
+</html>
